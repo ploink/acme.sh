@@ -1,7 +1,9 @@
 # acme.sh
 SSL Certificate manager using [acme-tiny](https://github.com/diafygi/acme-tiny) from Daniel Roesler.
 
-This is a bash script to simplify managing certificates from [letsencrypt](https://letsencrypt.org/) but it can also be used with others that implement the ACME v2 API. By default it creates both RSA and EC (Elliptic Curve) certificates. Note that certbot does not support EC certificates at the time of writing this.
+<sup>(not to be confused with [Neilpang/acme.sh](https://github.com/Neilpang/acme.sh))</sup>
+
+This is a bash script to simplify managing certificates from [letsencrypt](https://letsencrypt.org/) but it can also be used with others that implement the ACME v2 API. By default it creates both RSA and EC (Elliptic Curve) certificates. I initially wrote this script because certbot did not support EC certificates.
 
 # Installation
 Download the acme.sh script and make sure you check the code before you trust it.
