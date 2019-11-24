@@ -46,11 +46,11 @@ SSLCertificateFile          /etc/acme/mydomain.com/rsa.crt
 SSLCertificateKeyFile       /etc/acme/mydomain.com/ec.key
 SSLCertificateFile          /etc/acme/mydomain.com/ec.crt
 ```
-You now have a much larger choice of ciphers available. This enables us to jack up security by limiting the server to only secure protocols, high strenght ciphers with ephemeral keys and still support a wide range of clients. My configuration in Apache:
+In particular the EC certificate allows us to jack up security by limiting the server to only secure protocols, high strenght ciphers with ephemeral keys and still support a wide range of clients. My configuration in Apache:
 ```
 SSLUseStapling              on
 SSLProtocol                 all -SSLv3 -TLSv1 -TLSv1.1
 SSLCipherSuite              HIGH+kECDHE:!TLSv1:!SSLv3:!SHA256:!SHA384:@STRENGTH
 ```
-This supports many older clients except Safari < 9, Android < 4.4.1, IE < 11.
+This supports many clients starting from Safari 9, Android 4.4.1, IE 11. Chrome 49 on WinXP is supported using RSA.
 Test you webserver security at https://www.ssllabs.com/ssltest/
