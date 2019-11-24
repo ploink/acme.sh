@@ -50,6 +50,8 @@ CmdInstall() {
     cp -vf ${BASH_SOURCE[0]} /usr/local/bin/acme.sh
     chmod 755 /usr/local/bin/acme.sh
   fi
+  [[ -f "${CONFIG}" ]] && return
+
   python3 -m pip install --upgrade acme-tiny
   echo -n "Symlink "; ln -vsf /usr/local/bin/acme.sh /etc/cron.daily/
   local TXT=$(cat << HDC
@@ -63,17 +65,15 @@ Alias /.well-known/acme-challenge /var/www/acme-challenge
 HDC
   )
 
-  if [[ ! -f "${CONFIG}" ]]; then
-    mkdir -p "${ETC_DIR}"
-    echo -e "ACME_URL=\"${ACME_URL}\"\nACME_DIR=\"${ACME_DIR}\"\nHOSTS=\"www smtp\"\nTYPE_RSA=true\nTYPE_EC=true" > "${CONFIG}"
-    echo "Created ${CONFIG}" 
-    echo "${TXT}" > "${ETC_DIR}/acme-challenge.conf"
-    echo -e "#!/bin/bash\n" > "${ETC_DIR}/deploy.sh"
-    chmod u+x "${ETC_DIR}/deploy.sh"  
-    echo "Creating ${ETC_DIR}/acme-challenge.conf"
-    [[ -d "/etc/httpd/conf.d" ]] && ln -srvf "${ETC_DIR}/acme-challenge.conf" "/etc/httpd/conf.d/"
-    echo "Please review the configuration before you proceed"
-  fi
+  mkdir -p "${ETC_DIR}"
+  echo -e "ACME_URL=\"${ACME_URL}\"\nACME_DIR=\"${ACME_DIR}\"\nHOSTS=\"www smtp\"\nTYPE_RSA=true\nTYPE_EC=true" > "${CONFIG}"
+  echo "Created ${CONFIG}" 
+  echo "${TXT}" > "${ETC_DIR}/acme-challenge.conf"
+  echo -e "#!/bin/bash\n" > "${ETC_DIR}/deploy.sh"
+  chmod u+x "${ETC_DIR}/deploy.sh"  
+  echo "Creating ${ETC_DIR}/acme-challenge.conf"
+  #[[ -d "/etc/httpd/conf.d" ]] && ln -srvf "${ETC_DIR}/acme-challenge.conf" "/etc/httpd/conf.d/"
+  echo "Please review the configuration before you proceed"
 }
 
 DaysValid() {
