@@ -109,7 +109,7 @@ GetECcert() {
     openssl ecparam -genkey -name ${CURVE} | openssl ec -out ec.key.new
     openssl req -new -sha256 -key ec.key.new -subj "/" -addext "subjectAltName=${NAMES}" > ec.csr.new 
     acme-tiny --account-key ../account.key --csr ec.csr.new --directory-url="${ACME_URL}" --acme-dir "${ACME_DIR}" > ec.crt.new || exit $?
-    openssl verify -untrusted rsa.crt.new rsa.crt.new || exit $?
+    openssl verify -untrusted ec.crt.new ec.crt.new || exit $?
     mv -f ec.crt.new ec.crt
     mv -f ec.key.new ec.key
     mv -f ec.csr.new ec.csr
