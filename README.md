@@ -7,6 +7,9 @@ This is a bash script to simplify managing certificates from [letsencrypt](https
 
 # Installation
 Download the acme.sh script and make sure you check the code before you trust it.
+
+`curl https://raw.githubusercontent.com/ploink/acme.sh/master/acme.sh -o acme.sh`
+
 Invoke the builtin installer with:
 
 `sudo bash acme.sh install`
