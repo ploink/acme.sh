@@ -50,9 +50,15 @@ CmdInstall() {
     cp -vf ${BASH_SOURCE[0]} /usr/local/bin/acme.sh
     chmod 755 /usr/local/bin/acme.sh
   fi
+
+  if which apt-get &> /dev/null; then
+    dpkg -V acme-tiny || apt-get install acme-tiny
+  else
+    python3 -m pip install --upgrade acme-tiny
+  fi 
+
   [[ -f "${CONFIG}" ]] && return
 
-  python3 -m pip install --upgrade acme-tiny
   echo -n "Symlink "; ln -vsf /usr/local/bin/acme.sh /etc/cron.daily/
   local TXT=$(cat << HDC
 # Copy or symlink this file into /etc/httpd/conf.d and reload Apache
